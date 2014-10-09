@@ -10,7 +10,7 @@ Install redis-queue using the "go get" command:
 
     go get github.com/skidder/expiring-memory-store/ems
 
-The Go distribution and [Redigo](https://github.com/garyburd/redigo) (a Go client for Redis) are the only dependencies.
+The Go distribution and [concurrent-map](https://github.com/streamrail/concurrent-map) (a thread-safe map for Go) are the only dependencies.
 
 
 Tests
