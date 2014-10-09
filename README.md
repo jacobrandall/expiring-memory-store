@@ -1,4 +1,4 @@
-expiring-memory-store
+expiring-memory-store [![Circle CI](https://circleci.com/gh/skidder/expiring-memory-store/tree/master.png?style=badge)](https://circleci.com/gh/skidder/expiring-memory-store/tree/master)
 =====================
 
 Go implementation of an expiring key-value map
