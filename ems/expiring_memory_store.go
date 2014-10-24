@@ -19,14 +19,14 @@ import "errors"
 import "github.com/streamrail/concurrent-map"
 
 type ExpiringMemoryStore struct {
-	elementMap *cmap.ConcurrentMap
+	elementMap cmap.ConcurrentMap
 }
 
 var expiredElementError = errors.New("Element expired")
 var elementNotFoundError = errors.New("Element not found")
 
 func NewExpiringMemoryStore() *ExpiringMemoryStore {
-	return &ExpiringMemoryStore{elementMap: cmap.NewConcurrentMap()}
+	return &ExpiringMemoryStore{elementMap: cmap.New()}
 }
 
 func (store *ExpiringMemoryStore) Read(name string) (string, error) {
@@ -48,12 +48,12 @@ func (store *ExpiringMemoryStore) Read(name string) (string, error) {
 
 func (store *ExpiringMemoryStore) Write(name string, value string) {
 	element := NewElement(value)
-	store.elementMap.Add(name, element)
+	store.elementMap.Set(name, element)
 }
 
 func (store *ExpiringMemoryStore) WriteWithExpiration(name string, value string, expiresIn int64) {
 	element := NewElementWithExpiration(value, expiresIn)
-	store.elementMap.Add(name, element)
+	store.elementMap.Set(name, element)
 }
 
 func (store *ExpiringMemoryStore) Remove(name string) {
@@ -65,7 +65,9 @@ func (store *ExpiringMemoryStore) Exists(name string) bool {
 }
 
 func (store *ExpiringMemoryStore) Clear() {
-	store.elementMap.Clear()
+	for t := range store.elementMap.Iter() {
+		store.elementMap.Remove(t.Key)
+	}
 }
 
 func (store *ExpiringMemoryStore) CountActive() int {
