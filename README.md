@@ -6,7 +6,7 @@ Go implementation of an expiring key-value map
 Installation
 ------------
 
-Install redis-queue using the "go get" command:
+Install expiring-memory-store using the "go get" command:
 
     go get github.com/skidder/expiring-memory-store/ems
 
