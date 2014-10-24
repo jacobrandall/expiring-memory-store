@@ -26,7 +26,7 @@ var expiredElementError = errors.New("Element expired")
 var elementNotFoundError = errors.New("Element not found")
 
 func NewExpiringMemoryStore() *ExpiringMemoryStore {
-	return &ExpiringMemoryStore{elementMap:cmap.NewConcurrentMap()}
+	return &ExpiringMemoryStore{elementMap: cmap.NewConcurrentMap()}
 }
 
 func (store *ExpiringMemoryStore) Read(name string) (string, error) {
@@ -60,7 +60,7 @@ func (store *ExpiringMemoryStore) Remove(name string) {
 	store.elementMap.Remove(name)
 }
 
-func (store *ExpiringMemoryStore) Exists(name string) (bool) {
+func (store *ExpiringMemoryStore) Exists(name string) bool {
 	return store.elementMap.Has(name)
 }
 
@@ -68,17 +68,17 @@ func (store *ExpiringMemoryStore) Clear() {
 	store.elementMap.Clear()
 }
 
-func (store *ExpiringMemoryStore) CountActive() (int) {
+func (store *ExpiringMemoryStore) CountActive() int {
 	activeCount := 0
 	for t := range store.elementMap.Iter() {
 		element := t.Val.(*Element)
 		if !element.IsExpired() {
 			activeCount = activeCount + 1
-		}		
+		}
 	}
 	return activeCount
 }
 
-func (store *ExpiringMemoryStore) CountAll() (int) {
+func (store *ExpiringMemoryStore) CountAll() int {
 	return store.elementMap.Count()
 }

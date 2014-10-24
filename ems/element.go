@@ -18,18 +18,18 @@ package ems
 import "time"
 
 type Element struct {
-	value string
+	value     string
 	expiresAt int64
 }
 
 func NewElement(value string) *Element {
-	return &Element{value:value, expiresAt:(time.Now().Unix() + 20)}
+	return &Element{value: value, expiresAt: (time.Now().Unix() + 20)}
 }
 
 func NewElementWithExpiration(value string, expiresIn int64) *Element {
-	return &Element{value:value, expiresAt:(time.Now().Unix() + expiresIn)}
+	return &Element{value: value, expiresAt: (time.Now().Unix() + expiresIn)}
 }
 
-func (e *Element) IsExpired() (bool) {
+func (e *Element) IsExpired() bool {
 	return (e.expiresAt < time.Now().Unix())
 }

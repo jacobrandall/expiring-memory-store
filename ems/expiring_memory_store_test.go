@@ -18,8 +18,8 @@ package ems
 import (
 	// "sort"
 	"strconv"
-	"time"
 	"testing"
+	"time"
 )
 
 func TestMapCreation(t *testing.T) {
@@ -51,7 +51,7 @@ func TestWriteWithExpiration(t *testing.T) {
 		t.Error("map should contain exactly one element.")
 	}
 
-	time.Sleep(time.Duration(2)*time.Second)
+	time.Sleep(time.Duration(2) * time.Second)
 
 	val, err := m.Read("animal1")
 	if err != expiredElementError {
